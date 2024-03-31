@@ -1,5 +1,6 @@
 // always make ur database async await or try - catch
 // require('dotenv').config({path:'./env'})
+
 import dotenv from "dotenv"
 import connectDb from "./db/idx.js"
 
@@ -7,7 +8,14 @@ dotenv.config({
     path:'./env'
 })
 
-connectDb()
+connectDb().then(() => {
+    app.listen(process.env.PORT || 3000, () => {
+        console.log(`App is listening on Port: ${process.env.PORT}`);
+    })
+})
+.catch((err) =>{
+    console.log("Mongo DB connection failed",err);
+})
 
 
 
